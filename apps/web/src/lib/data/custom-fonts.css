@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Kaisei Opti';
+  src: url('/fonts/KaiseiOpti-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GL-CurulMinamoto';
+  src: url('/fonts/GL-CurulMinamoto.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
