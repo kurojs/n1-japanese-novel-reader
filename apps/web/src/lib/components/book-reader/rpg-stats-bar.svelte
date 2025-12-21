@@ -5,6 +5,7 @@
   export let bookCharCount: number;
   export let exploredCharCount: number;
   export let isTrackerPaused: boolean = false;
+  export let bookTitle: string = '';
 
   interface RPGStats {
     pagesReadToday: number;
@@ -203,11 +204,36 @@
     (window as any).mineWord = mineWord;
   }
 
+  function getProgressColor(progress: number): string {
+    if (progress < 20) return '#FF0000'; // Rojo
+    if (progress < 40) return '#FF8800'; // Naranja
+    if (progress < 60) return '#FFFF00'; // Amarillo
+    if (progress < 80) return '#00dd15'; // Verde
+    if (progress < 95) return '#9333ea'; // Morado matrix (medium)
+    return '#7c3aed'; // Morado matrix oscuro
+  }
+
+  function getTimeProgressColor(): string {
+    const hour = new Date().getHours();
+    
+    if (hour < 6) return '#7c3aed'; // Morado oscuro (noche)
+    if (hour < 9) return '#3b82f6'; // Azul (mañana temprano)
+    if (hour < 12) return '#00dd15'; // Verde (mañana)
+    if (hour < 13) return '#fbbf24'; // Amarillo (mediodía temprano)
+    if (hour < 16) return '#00dd15'; // Verde (tarde temprana)
+    if (hour < 18) return '#f97316'; // Naranja (tarde)
+    if (hour < 21) return '#ef4444'; // Rojo (atardecer)
+    return '#9333ea'; // Morado (noche temprana)
+  }
+
+  function getTimeProgress(): number {
+    const hour = new Date().getHours();
+    return (hour / 24) * 100;
+  }
+
   $: statsInfo = [
-    { value: `${stats.pagesReadToday}/${stats.dailyPageGoal}`, progress: Math.min((stats.pagesReadToday / stats.dailyPageGoal) * 100, 100), gif: '/boy.gif', alt: 'pages', label: 'Paginas hoy' },
-    { value: `${stats.wordsMinedToday}`, progress: Math.min((stats.wordsMinedToday / 50) * 100, 100), gif: '/pico.gif', alt: 'mined', label: 'Palabras minadas', clickable: true },
-    { value: currentTime, progress: 100, gif: '/clock.gif', alt: 'time', label: 'Hora actual' },
-    { value: `${bookProgress}%`, progress: bookProgress, gif: '/girl.gif', alt: 'progress', label: 'Progreso libro' }
+    { value: `${stats.wordsMinedToday}`, progress: Math.min((stats.wordsMinedToday / 50) * 100, 100), gif: '/pico.gif', alt: 'mined', label: 'Palabras minadas', clickable: true, position: 'left' },
+    { value: currentTime, progress: getTimeProgress(), gif: '/clock.gif', alt: 'time', label: 'Hora actual', position: 'right', timeColor: getTimeProgressColor() }
   ];
 
   function handleMineClick() {
@@ -221,12 +247,16 @@
   }
 </script>
 
-<div class="writing-horizontal-tb w-full h-full flex items-center justify-center px-4 py-3">
+<div class="writing-horizontal-tb w-full h-full flex items-end justify-between px-4 py-3">
+  <!-- Book title in center top -->
+  {#if bookTitle}
+    <div class="book-title-container">
+      <div class="book-title">{bookTitle}</div>
+    </div>
+  {/if}
+
   <div class="stats-row">
-    {#each statsInfo as stat, i}
-      {#if i > 0}
-        <span class="separator">•</span>
-      {/if}
+    {#each statsInfo.filter(s => s.position === 'left') as stat}
       <div class="stat-item">
         {#if stat.clickable}
           <button class="stat-gif-button" on:click={handleMineClick} title={stat.label}>
@@ -237,7 +267,19 @@
         {/if}
         <span class="stat-value">{stat.value}</span>
         <div class="xp-bar-horizontal" title={stat.label}>
-          <div class="xp-fill" style="width: {stat.progress}%"></div>
+          <div class="xp-fill" style="width: {stat.progress}%; background: {getProgressColor(stat.progress)}; box-shadow: 0 0 8px {getProgressColor(stat.progress)}80;"></div>
+        </div>
+      </div>
+    {/each}
+  </div>
+
+  <div class="stats-row">
+    {#each statsInfo.filter(s => s.position === 'right') as stat}
+      <div class="stat-item">
+        <img src={stat.gif} alt={stat.alt} class="stat-gif" title={stat.label} />
+        <span class="stat-value">{stat.value}</span>
+        <div class="xp-bar-horizontal" title={stat.label}>
+          <div class="xp-fill" style="width: {stat.progress}%; background: {stat.timeColor}; box-shadow: 0 0 8px {stat.timeColor}80;"></div>
         </div>
       </div>
     {/each}
@@ -324,15 +366,19 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: #00FF19;
-    transition: width 0.5s ease;
-    box-shadow: 0 0 8px rgba(0, 255, 25, 0.5);
-    animation: xpPulse 1.5s ease-in-out infinite;
+    transition: width 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
+    animation: glowPulse 2s ease-in-out infinite;
   }
 
-  @keyframes xpPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+  @keyframes glowPulse {
+    0%, 100% { 
+      opacity: 0.7;
+      filter: brightness(0.9);
+    }
+    50% { 
+      opacity: 1;
+      filter: brightness(1.3);
+    }
   }
 
   .timer {
@@ -343,6 +389,30 @@
   @keyframes timerPulse {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 1; }
+  }
+
+  .book-title-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  .book-title {
+    font-family: 'Monocraft', 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+    text-shadow: 0 0 8px rgba(147, 51, 234, 0.5);
   }
 
   @media (max-width: 768px) {
@@ -363,6 +433,11 @@
     .xp-bar-horizontal {
       width: 40px;
       height: 10px;
+    }
+
+    .book-title {
+      font-size: 0.75rem;
+      max-width: 200px;
     }
   }
 </style>

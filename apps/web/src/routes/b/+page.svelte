@@ -1689,6 +1689,7 @@
         {bookCharCount}
         {exploredCharCount}
         isTrackerPaused={$isTrackerPaused$}
+        bookTitle={$rawBookData$?.title || ''}
       />
     </div>
   {/if}

@@ -19,53 +19,23 @@
     Math.ceil((exploredCharCount / Math.max(bookCharCount, 1)) * estimatedTotalPages)
   );
 
-  $: progressInfo = [
-    showCharacterCounter
-      ? `${exploredCharCount.toLocaleString()} / ${bookCharCount.toLocaleString()} chars`
-      : '',
-    showPercentage ? `${progressPercentage.toFixed(1)}%` : '',
-    `Página ${estimatedCurrentPage} de ${estimatedTotalPages}`
-  ]
-    .filter(Boolean)
-    .join(' • ');
+  function numberToKanji(num: number): string {
+    const kanjiNumbers = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+    const digits = num.toString().split('');
+    return digits.map(d => kanjiNumbers[parseInt(d)]).join('');
+  }
+
+  $: progressInfo = `ページ ${numberToKanji(estimatedCurrentPage)} / ${numberToKanji(estimatedTotalPages)}`;
 
   $: showNavButtons = onPrevPage || onNextPage;
 </script>
 
-<div class="writing-horizontal-tb w-full h-full flex items-center justify-between px-4 py-3">
-  <!-- Left: Navigation button -->
-  <div class="flex items-center" style="min-width: {showNavButtons ? '40px' : '0'};">
-    {#if onPrevPage}
-      <button
-        on:click={onPrevPage}
-        class="w-8 h-8 flex items-center justify-center transition-opacity duration-150 hover:opacity-100"
-        style="color: rgba(255, 255, 255, 0.5); opacity: 0.6;"
-        title="Página anterior"
-      >
-        <Fa icon={faChevronLeft} />
-      </button>
-    {/if}
-  </div>
-
+<div class="writing-horizontal-tb w-full h-full flex items-center justify-center px-4 py-3">
   <!-- Center: Progress info -->
-  <div class="flex-1 flex items-center justify-center px-4">
+  <div class="flex items-center justify-center">
     <div class="text-sm font-medium tracking-wide monocraft-text" style="color: rgba(255, 255, 255, 0.7);">
       {progressInfo}
     </div>
-  </div>
-
-  <!-- Right: Navigation button -->
-  <div class="flex items-center justify-end" style="min-width: {showNavButtons ? '40px' : '0'};">
-    {#if onNextPage}
-      <button
-        on:click={onNextPage}
-        class="w-8 h-8 flex items-center justify-center transition-opacity duration-150 hover:opacity-100"
-        style="color: rgba(255, 255, 255, 0.5); opacity: 0.6;"
-        title="Página siguiente"
-      >
-        <Fa icon={faChevronRight} />
-      </button>
-    {/if}
   </div>
 </div>
 
