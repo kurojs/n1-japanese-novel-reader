@@ -96,6 +96,8 @@
     updateImageGalleryPictureSpoilers$
   } from '$lib/components/book-reader/book-reader-image-gallery/book-reader-image-gallery';
   import BookReaderImageGallery from '$lib/components/book-reader/book-reader-image-gallery/book-reader-image-gallery.svelte';
+  import BookReaderStatusBar from '$lib/components/book-reader/book-reader-status-bar.svelte';
+  import RpgStatsBar from '$lib/components/book-reader/rpg-stats-bar.svelte';
   import {
     getDefaultStatistic,
     isTrackerMenuOpen$,
@@ -1627,10 +1629,11 @@
     />
   {/if}
   <StyleSheetRenderer styleSheet={$bookData$.styleSheet} />
+
   <BookReader
     htmlContent={$bookData$.htmlContent}
     width={$containerViewportWidth$ ?? 0}
-    height={$containerViewportHeight$ ?? 0}
+    height={($containerViewportHeight$ ?? 0) - 128}
     prioritizeReaderStyles={$prioritizeReaderStyles$}
     enableTextJustification={$enableTextJustification$}
     enableTextWrapPretty={$enableTextWrapPretty$}
@@ -1673,6 +1676,33 @@
     on:bookmark={bookmarkPage}
     on:trackerPause={() => pauseTracker(true)}
   />
+
+  <!-- RPG Stats Bar fija arriba -->
+  {#if bookCharCount}
+    <div class="fixed top-0 left-0 right-0 z-[8]" style="height: 48px;">
+      <RpgStatsBar
+        {bookCharCount}
+        {exploredCharCount}
+        isTrackerPaused={$isTrackerPaused$}
+      />
+    </div>
+  {/if}
+
+  <!-- Status Bar fija al fondo -->
+  {#if bookCharCount}
+    <div class="fixed bottom-0 left-0 right-0 z-[8]" style="height: 80px;">
+      <BookReaderStatusBar
+        {exploredCharCount}
+        {bookCharCount}
+        fontColor={$themeOption$?.tooltipTextFontColor || '#ffffff'}
+        showCharacterCounter={$showCharacterCounter$}
+        showPercentage={$showPercentage$}
+        onPrevPage={isPaginated && pageManager ? () => pageManager?.prevPage() : undefined}
+        onNextPage={isPaginated && pageManager ? () => pageManager?.nextPage() : undefined}
+      />
+    </div>
+  {/if}
+
   {$initBookmarkData$ ?? ''}
   {$setBackgroundColor$ ?? ''}
   {$setWritingMode$ ?? ''}
@@ -1749,7 +1779,7 @@
   id="ttu-page-footer"
   tabindex="0"
   role="button"
-  class="writing-horizontal-tb fixed bottom-0 left-0 z-10 flex h-8 w-full items-center justify-between text-xs leading-none"
+  class="writing-horizontal-tb fixed bottom-0 left-0 z-[5] flex h-8 w-full items-center justify-between text-xs leading-none"
   style:color={$themeOption$?.tooltipTextFontColor}
   on:click={() => (showFooter = !showFooter)}
   on:keyup={dummyFn}
@@ -1792,36 +1822,6 @@
       </div>
     {/if}
   </div>
-  {#if showFooter && bookCharCount}
-    {@const currentProgress = [
-      $showCharacterCounter$ ? `${exploredCharCount} / ${bookCharCount}` : '',
-      $showPercentage$ ? `${((exploredCharCount / bookCharCount) * 100).toFixed(2)}%` : ''
-    ]
-      .filter(Boolean)
-      .join(' ')}
-    <div
-      tabindex="0"
-      role="button"
-      title="Click to copy Progress"
-      class="writing-horizontal-tb fixed bottom-2 right-2 z-10 text-xs leading-none select-none"
-      class:invisible={!$showCharacterCounter$ && !$showPercentage$}
-      style:color={$themeOption$?.tooltipTextFontColor}
-      on:click|stopPropagation={({ target }) => {
-        if (!$showCharacterCounter$ && !$showPercentage$) {
-          return;
-        }
-
-        copyCurrentProgress(currentProgress);
-
-        if (target instanceof HTMLElement) {
-          pulseElement(target, 'add', 0.5, 500);
-        }
-      }}
-      on:keyup={dummyFn}
-    >
-      {currentProgress}
-    </div>
-  {/if}
 </div>
 
 {#if bookCompleted}

@@ -1,5 +1,5 @@
 .book-content {
-  font-family: "Kaisei Opti", "GL-CurulMinamoto", "Sawarabi Mincho", "IPAexMincho", serif;
+  font-family: 'Kaisei Opti', 'GL-CurulMinamoto', 'Sawarabi Mincho', 'IPAexMincho', serif;
   font-weight: 400;
   background: transparent !important;
   color: #d0d7de !important;
@@ -10,7 +10,7 @@
   letter-spacing: 0.04em;
   line-height: 1.85;
   font-size: 18px;
-  font-feature-settings: "palt" 1; /* Proporcional alternates para mejor espaciado */
+  font-feature-settings: 'palt' 1; /* Proporcional alternates para mejor espaciado */
 }
 
 .book-content :global(*) {
@@ -26,7 +26,7 @@
   :global(.ttu-book-body-wrapper.ttu-no-text) {
     margin: 0 !important;
   }
-  
+
   :global(.ttu-book-html-wrapper),
   :global(.ttu-book-body-wrapper),
   :global(body),
@@ -36,7 +36,7 @@
     background-image: none !important;
     color: #d0d7de !important;
   }
-  
+
   :global(p),
   :global(div),
   :global(span),

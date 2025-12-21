@@ -6,8 +6,20 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Kaisei Opti"', '"GL-CurulMinamoto"', '"IBM Plex Sans JP"', '"Noto Sans JP"', 'sans-serif'],
-        serif: ['"Kaisei Opti"', '"GL-CurulMinamoto"', '"Source Han Serif"', '"Noto Serif JP"', 'serif']
+        sans: [
+          '"Kaisei Opti"',
+          '"GL-CurulMinamoto"',
+          '"IBM Plex Sans JP"',
+          '"Noto Sans JP"',
+          'sans-serif'
+        ],
+        serif: [
+          '"Kaisei Opti"',
+          '"GL-CurulMinamoto"',
+          '"Source Han Serif"',
+          '"Noto Serif JP"',
+          'serif'
+        ]
       },
       colors: {
         'background-color': 'var(--background-color)'
