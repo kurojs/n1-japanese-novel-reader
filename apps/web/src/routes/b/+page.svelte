@@ -98,6 +98,7 @@
   import BookReaderImageGallery from '$lib/components/book-reader/book-reader-image-gallery/book-reader-image-gallery.svelte';
   import BookReaderStatusBar from '$lib/components/book-reader/book-reader-status-bar.svelte';
   import RpgStatsBar from '$lib/components/book-reader/rpg-stats-bar.svelte';
+  import MatrixRainBackground from '$lib/components/book-reader/matrix-rain-background.svelte';
   import {
     getDefaultStatistic,
     isTrackerMenuOpen$,
@@ -1519,6 +1520,10 @@
 
 {$collectReaderImageGallerySpoilerToggles$ ?? ''}
 {$handleUpdateImageGalleryPictureSpoilers$ ?? ''}
+
+<!-- Matrix Rain Background -->
+<MatrixRainBackground />
+
 <button class="fixed inset-x-0 top-0 z-10 h-8 w-full" on:click={() => (showHeader = true)} />
 {#if showHeader}
   <div
