@@ -2,7 +2,7 @@ const eslint = require('@eslint/js');
 const { fixupPluginRules } = require('@eslint/compat');
 const headers = require('eslint-plugin-headers');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
-const rxjs = require('eslint-plugin-rxjs');
+const rxjs = require('eslint-plugin-rxjs-x');
 const tseslint = require('typescript-eslint');
 
 let eslintPluginSvelte;
