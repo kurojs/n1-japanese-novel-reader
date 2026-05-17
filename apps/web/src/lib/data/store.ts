@@ -73,7 +73,7 @@ export const fontFamilyGroupTwo$ = writableStringLocalStorageSubject()(
   'fontFamilyGroupTwo',
   'Noto Sans JP'
 );
-export const fontSize$ = writableNumberLocalStorageSubject()('fontSize', 20);
+export const fontSize$ = writableNumberLocalStorageSubject()('fontSize', 40);
 export const lineHeight$ = writableNumberLocalStorageSubject()('lineHeight', 1.65);
 export const textIndentation$ = writableNumberLocalStorageSubject()('textIndentation', 0);
 export const textMarginValue$ = writableNumberLocalStorageSubject()('textMarginValue', 0);

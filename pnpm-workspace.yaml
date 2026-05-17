@@ -1,2 +1,10 @@
 packages:
   - apps/*
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  '@seorii/win32-displayconfig': set this to true or false
+  electron: set this to true or false
+  electron-acrylic-window: set this to true or false
+  esbuild: set this to true or false
+  svelte-preprocess: set this to true or false
+  unrs-resolver: set this to true or false

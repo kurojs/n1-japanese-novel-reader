@@ -48,6 +48,10 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@seorii/win32-displayconfig",
+      "electron-acrylic-window",
+      "electron",
       "esbuild",
       "svelte-preprocess",
       "unrs-resolver"

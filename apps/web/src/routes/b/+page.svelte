@@ -97,8 +97,6 @@
   } from '$lib/components/book-reader/book-reader-image-gallery/book-reader-image-gallery';
   import BookReaderImageGallery from '$lib/components/book-reader/book-reader-image-gallery/book-reader-image-gallery.svelte';
   import BookReaderStatusBar from '$lib/components/book-reader/book-reader-status-bar.svelte';
-  import RpgStatsBar from '$lib/components/book-reader/rpg-stats-bar.svelte';
-  import MatrixRainBackground from '$lib/components/book-reader/matrix-rain-background.svelte';
   import {
     getDefaultStatistic,
     isTrackerMenuOpen$,
@@ -1521,8 +1519,6 @@
 {$collectReaderImageGallerySpoilerToggles$ ?? ''}
 {$handleUpdateImageGalleryPictureSpoilers$ ?? ''}
 
-<!-- Matrix Rain Background -->
-<MatrixRainBackground />
 
 <button class="fixed inset-x-0 top-0 z-10 h-8 w-full" on:click={() => (showHeader = true)} />
 {#if showHeader}
@@ -1638,7 +1634,7 @@
   <BookReader
     htmlContent={$bookData$.htmlContent}
     width={$containerViewportWidth$ ?? 0}
-    height={($containerViewportHeight$ ?? 0) - 128}
+    height={($containerViewportHeight$ ?? 0) - 80}
     prioritizeReaderStyles={$prioritizeReaderStyles$}
     enableTextJustification={$enableTextJustification$}
     enableTextWrapPretty={$enableTextWrapPretty$}
@@ -1681,18 +1677,6 @@
     on:bookmark={bookmarkPage}
     on:trackerPause={() => pauseTracker(true)}
   />
-
-  <!-- RPG Stats Bar fija arriba -->
-  {#if bookCharCount}
-    <div class="fixed top-0 left-0 right-0 z-[8]" style="height: 48px;">
-      <RpgStatsBar
-        {bookCharCount}
-        {exploredCharCount}
-        isTrackerPaused={$isTrackerPaused$}
-        bookTitle={$rawBookData$?.title || ''}
-      />
-    </div>
-  {/if}
 
   <!-- Status Bar fija al fondo -->
   {#if bookCharCount}
