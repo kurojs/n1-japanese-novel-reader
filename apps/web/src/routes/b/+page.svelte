@@ -419,13 +419,15 @@
     takeWhenBrowser()
   );
 
+  // Removed: writing-mode is now applied to .book-content container via CSS
+  // instead of documentElement, so browser extensions (Trancy, Yomitan)
+  // don't inherit vertical-rl on their popups
   const writingModeStyleName = 'writing-mode';
   const setWritingMode$ = writingMode$.pipe(
     tapDom(
-      () => document.documentElement,
-      (writingMode, documentElement) =>
-        documentElement.style.setProperty(writingModeStyleName, writingMode),
-      (documentElement) => documentElement.style.removeProperty(writingModeStyleName)
+      () => document.body,
+      (writingMode, body) => body.style.setProperty(writingModeStyleName, 'horizontal-tb'),
+      (body) => body.style.removeProperty(writingModeStyleName)
     ),
     reduceToEmptyString(),
     takeWhenBrowser()
@@ -1518,7 +1520,6 @@
 
 {$collectReaderImageGallerySpoilerToggles$ ?? ''}
 {$handleUpdateImageGalleryPictureSpoilers$ ?? ''}
-
 
 <button class="fixed inset-x-0 top-0 z-10 h-8 w-full" on:click={() => (showHeader = true)} />
 {#if showHeader}

@@ -89,20 +89,6 @@
       text-indent: var(--book-content-text-intendation, 0rem);
     }
 
-    &.book-content--writing-vertical-rl {
-      :global(p) {
-        margin-right: var(--book-content-text-margin, 0rem);
-        margin-left: var(--book-content-text-margin, 0rem);
-      }
-    }
-
-    &.book-content--writing-horizontal-rl {
-      :global(p) {
-        margin-top: var(--book-content-text-margin, 0rem);
-        margin-bottom: var(--book-content-text-margin, 0rem);
-      }
-    }
-
     &.ttu-apply-justification {
       text-align: justify;
       hyphens: auto;
@@ -127,20 +113,6 @@
       text-indent: var(--book-content-text-intendation, 0rem) !important;
     }
 
-    &.book-content--writing-vertical-rl {
-      :global(p) {
-        margin-right: var(--book-content-text-margin, 0rem) !important;
-        margin-left: var(--book-content-text-margin, 0rem) !important;
-      }
-    }
-
-    &.book-content--writing-horizontal-rl {
-      :global(p) {
-        margin-top: var(--book-content-text-margin, 0rem) !important;
-        margin-bottom: var(--book-content-text-margin, 0rem) !important;
-      }
-    }
-
     &.ttu-apply-justification {
       text-align: justify !important;
       hyphens: auto !important;
@@ -157,6 +129,42 @@
       :global(p) {
         text-wrap: pretty !important;
       }
+    }
+  }
+}
+
+.book-content--writing-vertical-rl {
+  writing-mode: vertical-rl;
+
+  &:not(.ttu-apply-important) {
+    :global(p) {
+      margin-right: var(--book-content-text-margin, 0rem);
+      margin-left: var(--book-content-text-margin, 0rem);
+    }
+  }
+
+  &.ttu-apply-important {
+    :global(p) {
+      margin-right: var(--book-content-text-margin, 0rem) !important;
+      margin-left: var(--book-content-text-margin, 0rem) !important;
+    }
+  }
+}
+
+.book-content--writing-horizontal-rl {
+  writing-mode: horizontal-tb;
+
+  &:not(.ttu-apply-important) {
+    :global(p) {
+      margin-top: var(--book-content-text-margin, 0rem);
+      margin-bottom: var(--book-content-text-margin, 0rem);
+    }
+  }
+
+  &.ttu-apply-important {
+    :global(p) {
+      margin-top: var(--book-content-text-margin, 0rem) !important;
+      margin-bottom: var(--book-content-text-margin, 0rem) !important;
     }
   }
 }
