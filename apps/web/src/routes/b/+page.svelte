@@ -1635,7 +1635,7 @@
   <BookReader
     htmlContent={$bookData$.htmlContent}
     width={$containerViewportWidth$ ?? 0}
-    height={($containerViewportHeight$ ?? 0) - 80}
+    height={$containerViewportHeight$ ?? 0}
     prioritizeReaderStyles={$prioritizeReaderStyles$}
     enableTextJustification={$enableTextJustification$}
     enableTextWrapPretty={$enableTextWrapPretty$}
@@ -1681,7 +1681,7 @@
 
   <!-- Status Bar fija al fondo -->
   {#if bookCharCount}
-    <div class="fixed bottom-0 left-0 right-0 z-[8]" style="height: 80px;">
+    <div class="fixed bottom-0 left-0 right-0 z-[8] h-16 pointer-events-none">
       <BookReaderStatusBar
         {exploredCharCount}
         {bookCharCount}
