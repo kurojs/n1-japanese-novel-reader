@@ -18,7 +18,10 @@ const config = {
   kit: {
     adapter: adapter({
       fallback: '404.html'
-    })
+    }),
+    paths: {
+      base: process.env.GH_PAGES === 'true' ? '/n1-japanese-novel-reader' : ''
+    }
   }
 };
 
