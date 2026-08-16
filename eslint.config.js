@@ -25,6 +25,7 @@ module.exports = (async () => {
         '**/material-elevation.cjs',
         '**/vite.config.js',
         '**/eslint.config.js',
+        '**/svelte.config.js',
         '**/tailwind.config.cjs'
       ]
     },
@@ -67,13 +68,16 @@ module.exports = (async () => {
         'headers/header-format': [
           'error',
           {
-            content: `@license BSD-3-Clause\nCopyright (c) {year}, ッツ Reader Authors\nAll rights reserved.`,
+            content: `@license BSD-3-Clause\nCopyright (c) (year), ッツ Reader Authors\nAll rights reserved.`,
             source: 'string',
             style: 'jsdoc',
             trailingNewlines: 2,
             preservePragmas: false,
-            variables: {
-              year: `${new Date().getFullYear()}`
+            patterns: {
+              year: {
+                pattern: '\\d{4}',
+                defaultValue: `${new Date().getFullYear()}`
+              }
             }
           }
         ]
@@ -94,6 +98,12 @@ module.exports = (async () => {
       files: ['service-worker.ts'],
       rules: {
         'headers/header-format': 'off'
+      }
+    },
+    {
+      files: ['**/*.d.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off'
       }
     }
   );
