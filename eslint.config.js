@@ -1,3 +1,4 @@
+const path = require('path');
 const eslint = require('@eslint/js');
 const { fixupPluginRules } = require('@eslint/compat');
 const headers = require('eslint-plugin-headers');
@@ -35,7 +36,7 @@ module.exports = (async () => {
           extraFileExtensions: ['.svelte'],
           project: './tsconfig.eslint.json',
           sourceType: 'module',
-          tsconfigRootDir: './apps/web/'
+          tsconfigRootDir: path.resolve(__dirname, 'apps/web')
         }
       },
       name: 'root',

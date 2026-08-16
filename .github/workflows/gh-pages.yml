@@ -48,7 +48,7 @@ jobs:
         env:
           GH_PAGES: 'true'
           VITE_PAGE_PATH: /n1-japanese-novel-reader
-          VITE_BASE_PATH: https://kiroku67.github.io/n1-japanese-novel-reader
+          VITE_BASE_PATH: https://kurojs.github.io/n1-japanese-novel-reader
           VITE_GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
           VITE_ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
 
